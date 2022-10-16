@@ -14,8 +14,8 @@ namespace Game.Gameplay.Playing
         private IEventService _eventService;
         private BoxCollider2D _boxCollider;
         private Rigidbody2D _rigidBody;
-        private bool _isJumping;
         private bool _isGrounded;
+        private bool _isJumping;
 
         public void Begin(IEventService eventService, Rigidbody2D rigidBody, BoxCollider2D boxCollider)
         {
@@ -44,7 +44,7 @@ namespace Game.Gameplay.Playing
         {
             base.OnTick(deltaTime);
 
-            _isGrounded = DetectGroundCollision();
+            _isGrounded = IsGrounded();
         }
 
         protected override void OnFixedTick(float fixedDeltaTime)
@@ -57,6 +57,8 @@ namespace Game.Gameplay.Playing
             }
             
             _rigidBody.AddForce(Vector2.up * _jumpForce);
+            
+            _isJumping = false;
         }
 
         private void HandleReadInputs(ServiceEvent serviceEvent)
@@ -64,8 +66,18 @@ namespace Game.Gameplay.Playing
             if (serviceEvent is ReadInputsEvent readInputsEvent)
             {
                 InputsData inputsData = readInputsEvent.InputsData;
+
+                if (!inputsData.PressJump)
+                {
+                    return;
+                }
+
+                if (_isJumping)
+                {
+                    return;
+                }
                 
-                _isJumping = inputsData.PressJump;
+                _isJumping = true;
             }
         }
 
@@ -78,13 +90,15 @@ namespace Game.Gameplay.Playing
 
             if (!_isGrounded)
             {
+                _isJumping = false;
+                
                 return false;
             }
 
             return true;
         }
 
-        private bool DetectGroundCollision()
+        private bool IsGrounded()
         {
             Bounds bounds = _boxCollider.bounds;
             
