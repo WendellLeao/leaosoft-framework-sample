@@ -1,7 +1,9 @@
 ﻿using Game.Gameplay.Inputs;
 using Leaosoft.Events;
+using Leaosoft.Audio;
 using UnityEngine;
 using Leaosoft;
+using Leaosoft.Services;
 
 namespace Game.Gameplay.Playing
 {
@@ -10,10 +12,14 @@ namespace Game.Gameplay.Playing
         [SerializeField] private float _jumpForce;
         [SerializeField] private float _minimumDistance = 0.06f;
         [SerializeField] private LayerMask _groundLayers;
+
+        [Header("Audio")] 
+        [SerializeField] private AudioData _jumpAudio;
         
         private IEventService _eventService;
         private BoxCollider2D _boxCollider;
         private Rigidbody2D _rigidBody;
+        private IAudioService _audioService;
         private bool _isGrounded;
         private bool _isJumping;
 
@@ -22,6 +28,8 @@ namespace Game.Gameplay.Playing
             _eventService = eventService;
             _boxCollider = boxCollider;
             _rigidBody = rigidBody;
+
+            _audioService = ServiceLocator.GetService<IAudioService>();
             
             base.Begin();
         }
@@ -57,6 +65,8 @@ namespace Game.Gameplay.Playing
             }
             
             _rigidBody.AddForce(Vector2.up * _jumpForce);
+
+            _audioService.PlaySound(_jumpAudio.Id, Vector3.zero);
             
             _isJumping = false;
         }

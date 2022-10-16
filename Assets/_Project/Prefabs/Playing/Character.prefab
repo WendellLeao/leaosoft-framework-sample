@@ -249,3 +249,4 @@ MonoBehaviour:
   _groundLayers:
     serializedVersion: 2
     m_Bits: 64
+  _jumpAudio: {fileID: 11400000, guid: 0304153595f1f634f84259a9e41f5bfc, type: 2}

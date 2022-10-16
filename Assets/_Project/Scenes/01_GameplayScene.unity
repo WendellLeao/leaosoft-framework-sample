@@ -738,6 +738,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterManager: {fileID: 1047132876}
   _inputsManager: {fileID: 1721021618}
+  _gameThemeAudio: {fileID: 11400000, guid: f0eadc93abe789941864a92a93007540, type: 2}
 --- !u!1 &1528871662
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@
       "url": "https://package.openupm.com"
     },
     "com.leaosoft.core": {
-      "version": "1.1.2",
+      "version": "1.1.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -142,7 +142,7 @@
       }
     },
     "com.unity.ide.rider": {
-      "version": "3.0.15",
+      "version": "3.0.16",
       "depth": 0,
       "source": "registry",
       "dependencies": {

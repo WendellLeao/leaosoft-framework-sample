@@ -11,6 +11,9 @@ namespace Game.Gameplay
     {
         [SerializeField] private CharacterManager _characterManager;
         [SerializeField] private InputsManager _inputsManager;
+
+        [Header("Audio")] 
+        [SerializeField] private AudioData _gameThemeAudio;
         
         protected override void OnInitialize()
         {
@@ -52,7 +55,7 @@ namespace Game.Gameplay
         {
             IAudioService audioService = ServiceLocator.GetService<IAudioService>();
             
-            audioService.PlaySound(Sound.GameTheme, Vector3.zero);
+            audioService.PlaySound(_gameThemeAudio.Id, Vector3.zero);
         }
     }
 }
