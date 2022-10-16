@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: SoundPlayerPoolData
   m_EditorClassIdentifier: 
   PoolType: 0
-  ObjectToPool: {fileID: 4659221791940540471, guid: a8e7d2918a30c364ba12bfd3092aa890, type: 3}
+  ObjectToPool: {fileID: 4659221791940540471, guid: 3fb37c957bffb564b924ef66b9acef94, type: 3}
   StartAmount: 5

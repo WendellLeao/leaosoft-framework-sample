@@ -1,5 +1,4 @@
-using Leaosoft.Services;
-using Leaosoft.Input;
+using Leaosoft.Events;
 using UnityEngine;
 using Leaosoft;
 
@@ -9,13 +8,20 @@ namespace Game.Gameplay.Playing
     {
         [SerializeField] private Character _character;
         
+        private IEventService _eventService;
+
+        public void Initialize(IEventService eventService)
+        {
+            _eventService = eventService;
+            
+            base.Initialize();
+        }
+        
         protected override void OnInitialize()
         {
             base.OnInitialize();
 
-            IInputService inputService = ServiceLocator.GetService<IInputService>();
-
-            _character.Begin(inputService);
+            _character.Begin(_eventService);
         }
 
         protected override void OnDispose()

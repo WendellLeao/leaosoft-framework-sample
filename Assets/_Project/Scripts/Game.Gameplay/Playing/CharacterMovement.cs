@@ -1,4 +1,5 @@
-﻿using Leaosoft.Input;
+﻿using Game.Gameplay.Inputs;
+using Leaosoft.Events;
 using UnityEngine;
 using Leaosoft;
 
@@ -8,13 +9,13 @@ namespace Game.Gameplay.Playing
     {
         [SerializeField] private float _moveSpeed;
         
-        private IInputService _inputService;
+        private IEventService _eventService;
         private Rigidbody2D _rigidBody;
         private Vector2 _movement;
 
-        public void Begin(IInputService inputService, Rigidbody2D rigidBody)
+        public void Begin(IEventService eventService, Rigidbody2D rigidBody)
         {
-            _inputService = inputService;
+            _eventService = eventService;
             _rigidBody = rigidBody;
             
             base.Begin();
@@ -24,14 +25,14 @@ namespace Game.Gameplay.Playing
         {
             base.OnBegin();
             
-            _inputService.OnReadInputs += HandleReadInputs;
+            _eventService.AddEventListener<ReadInputsEvent>(HandleReadInputs);
         }
 
         protected override void OnStop()
         {
             base.OnStop();
             
-            _inputService.OnReadInputs -= HandleReadInputs;
+            _eventService.RemoveEventListener<ReadInputsEvent>(HandleReadInputs);
         }
 
         protected override void OnFixedTick(float fixedDeltaTime)
@@ -44,9 +45,14 @@ namespace Game.Gameplay.Playing
             _rigidBody.velocity = new Vector2(horizontalMovement, verticalMovement);
         }
 
-        private void HandleReadInputs(InputsData inputsData)
+        private void HandleReadInputs(ServiceEvent serviceEvent)
         {
-            _movement = inputsData.Movement;
+            if (serviceEvent is ReadInputsEvent readInputsEvent)
+            {
+                InputsData inputsData = readInputsEvent.InputsData;
+                
+                _movement = inputsData.Movement;
+            }
         }
     }
 }

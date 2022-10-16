@@ -1,4 +1,5 @@
-﻿using Leaosoft.Input;
+﻿using Game.Gameplay.Inputs;
+using Leaosoft.Events;
 using UnityEngine;
 using Leaosoft;
 
@@ -10,15 +11,15 @@ namespace Game.Gameplay.Playing
         [SerializeField] private float _minimumDistance = 0.06f;
         [SerializeField] private LayerMask _groundLayers;
         
-        private IInputService _inputService;
+        private IEventService _eventService;
         private BoxCollider2D _boxCollider;
         private Rigidbody2D _rigidBody;
         private bool _isJumping;
         private bool _isGrounded;
 
-        public void Begin(IInputService inputService, Rigidbody2D rigidBody, BoxCollider2D boxCollider)
+        public void Begin(IEventService eventService, Rigidbody2D rigidBody, BoxCollider2D boxCollider)
         {
-            _inputService = inputService;
+            _eventService = eventService;
             _boxCollider = boxCollider;
             _rigidBody = rigidBody;
             
@@ -29,14 +30,14 @@ namespace Game.Gameplay.Playing
         {
             base.OnBegin();
             
-            _inputService.OnReadInputs += HandleReadInputs;
+            _eventService.AddEventListener<ReadInputsEvent>(HandleReadInputs);
         }
 
         protected override void OnStop()
         {
             base.OnStop();
             
-            _inputService.OnReadInputs -= HandleReadInputs;
+            _eventService.RemoveEventListener<ReadInputsEvent>(HandleReadInputs);
         }
 
         protected override void OnTick(float deltaTime)
@@ -58,9 +59,14 @@ namespace Game.Gameplay.Playing
             _rigidBody.AddForce(Vector2.up * _jumpForce);
         }
 
-        private void HandleReadInputs(InputsData inputsData)
+        private void HandleReadInputs(ServiceEvent serviceEvent)
         {
-            _isJumping = inputsData.PressJump;
+            if (serviceEvent is ReadInputsEvent readInputsEvent)
+            {
+                InputsData inputsData = readInputsEvent.InputsData;
+                
+                _isJumping = inputsData.PressJump;
+            }
         }
 
         private bool CanJump()
