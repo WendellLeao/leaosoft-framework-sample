@@ -1,9 +1,8 @@
-﻿using Game.Gameplay.Inputs;
-using Leaosoft.Events;
+﻿using Leaosoft.Services;
+using Leaosoft.Input;
 using Leaosoft.Audio;
 using UnityEngine;
 using Leaosoft;
-using Leaosoft.Services;
 
 namespace Game.Gameplay.Playing
 {
@@ -16,36 +15,37 @@ namespace Game.Gameplay.Playing
         [Header("Audio")] 
         [SerializeField] private AudioData _jumpAudio;
         
-        private IEventService _eventService;
+        private IInputService _inputService;
+        private IAudioService _audioService;
         private BoxCollider2D _boxCollider;
         private Rigidbody2D _rigidBody;
-        private IAudioService _audioService;
         private bool _isGrounded;
         private bool _isJumping;
 
-        public void Begin(IEventService eventService, Rigidbody2D rigidBody, BoxCollider2D boxCollider)
+        public void Begin(IInputService inputService, Rigidbody2D rigidBody, BoxCollider2D boxCollider)
         {
-            _eventService = eventService;
+            _inputService = inputService;
+            
+            _audioService = ServiceLocator.GetService<IAudioService>();
+            
             _boxCollider = boxCollider;
             _rigidBody = rigidBody;
 
-            _audioService = ServiceLocator.GetService<IAudioService>();
-            
             base.Begin();
         }
 
         protected override void OnBegin()
         {
             base.OnBegin();
-            
-            _eventService.AddEventListener<ReadInputsEvent>(HandleReadInputs);
+
+            _inputService.OnReadInputs += HandleReadInputs;
         }
 
         protected override void OnStop()
         {
             base.OnStop();
             
-            _eventService.RemoveEventListener<ReadInputsEvent>(HandleReadInputs);
+            _inputService.OnReadInputs -= HandleReadInputs;
         }
 
         protected override void OnTick(float deltaTime)
@@ -71,24 +71,19 @@ namespace Game.Gameplay.Playing
             _isJumping = false;
         }
 
-        private void HandleReadInputs(ServiceEvent serviceEvent)
+        private void HandleReadInputs(InputsData inputsData)
         {
-            if (serviceEvent is ReadInputsEvent readInputsEvent)
+            if (!inputsData.PressJump)
             {
-                InputsData inputsData = readInputsEvent.InputsData;
-
-                if (!inputsData.PressJump)
-                {
-                    return;
-                }
-
-                if (_isJumping)
-                {
-                    return;
-                }
-                
-                _isJumping = true;
+                return;
             }
+        
+            if (_isJumping)
+            {
+                return;
+            }
+                
+            _isJumping = true;
         }
 
         private bool CanJump()

@@ -1,5 +1,4 @@
-﻿using Game.Gameplay.Inputs;
-using Leaosoft.Events;
+﻿using Leaosoft.Input;
 using UnityEngine;
 using Leaosoft;
 
@@ -9,50 +8,85 @@ namespace Game.Gameplay.Playing
     {
         [SerializeField] private float _moveSpeed;
         
-        private IEventService _eventService;
+        private IInputService _inputService;
         private Rigidbody2D _rigidBody;
         private Vector2 _movement;
+        private bool _isFacingRight = true;
 
-        public void Begin(IEventService eventService, Rigidbody2D rigidBody)
+        public void Begin(IInputService inputService, Rigidbody2D rigidBody)
         {
-            _eventService = eventService;
+            _inputService = inputService;
+
             _rigidBody = rigidBody;
-            
+
             base.Begin();
         }
 
         protected override void OnBegin()
         {
             base.OnBegin();
-            
-            _eventService.AddEventListener<ReadInputsEvent>(HandleReadInputs);
+
+            _inputService.OnReadInputs += HandleReadInputs;
         }
 
         protected override void OnStop()
         {
             base.OnStop();
             
-            _eventService.RemoveEventListener<ReadInputsEvent>(HandleReadInputs);
+            _inputService.OnReadInputs -= HandleReadInputs;
         }
-
+        
         protected override void OnFixedTick(float fixedDeltaTime)
         {
             base.OnFixedTick(fixedDeltaTime);
-            
-            float horizontalMovement = _movement.x * _moveSpeed;
+
+            MoveCharacter(_movement);
+        }
+
+        private void HandleReadInputs(InputsData inputsData)
+        {
+            _movement = inputsData.Movement;
+
+            if (ShouldFlip(_movement))
+            {
+                FlipCharacter();
+            }
+        }
+        
+        private void FlipCharacter()
+        {
+            _isFacingRight = !_isFacingRight;
+
+            Transform characterTransform = transform;
+                
+            Vector3 localScale = characterTransform.localScale;
+
+            localScale.x *= -1f;
+
+            characterTransform.localScale = localScale;
+        }
+        
+        private void MoveCharacter(Vector2 movement)
+        {
+            float horizontalMovement = movement.x * _moveSpeed;
             float verticalMovement = _rigidBody.velocity.y;
-            
+
             _rigidBody.velocity = new Vector2(horizontalMovement, verticalMovement);
         }
 
-        private void HandleReadInputs(ServiceEvent serviceEvent)
+        private bool ShouldFlip(Vector2 movement)
         {
-            if (serviceEvent is ReadInputsEvent readInputsEvent)
+            if (_isFacingRight && movement.x < 0)
             {
-                InputsData inputsData = readInputsEvent.InputsData;
-                
-                _movement = inputsData.Movement;
+                return true;
             }
+            
+            if (!_isFacingRight && movement.x > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

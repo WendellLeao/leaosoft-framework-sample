@@ -1,4 +1,4 @@
-using Leaosoft.Events;
+using Leaosoft.Input;
 using UnityEngine;
 using Leaosoft;
 
@@ -17,11 +17,11 @@ namespace Game.Gameplay.Playing
         [Header("View")] 
         [SerializeField] private CharacterView _characterView;
 
-        private IEventService _eventService;
+        private IInputService _inputService;
 
-        public void Begin(IEventService eventService)
+        public void Begin(IInputService inputService)
         {
-            _eventService = eventService;
+            _inputService = inputService;
 
             base.Begin();
         }
@@ -32,8 +32,8 @@ namespace Game.Gameplay.Playing
             
             _characterView.Setup();
             
-            _characterMovement.Begin(_eventService, _rigidBody);
-            _characterJump.Begin(_eventService, _rigidBody, _boxCollider);
+            _characterMovement.Begin(_inputService, _rigidBody);
+            _characterJump.Begin(_inputService, _rigidBody, _boxCollider);
         }
 
         protected override void OnStop()
