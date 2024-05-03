@@ -94,7 +94,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4578459226969758206}
   - component: {fileID: 4578459226969758204}
-  - component: {fileID: 4578459226969758205}
   - component: {fileID: 9097762526998903828}
   m_Layer: 0
   m_Name: CharacterView
@@ -172,26 +171,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &4578459226969758205
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4578459226969758207}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &9097762526998903828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,7 +314,7 @@ MonoBehaviour:
   _groundLayers:
     serializedVersion: 2
     m_Bits: 64
-  _jumpAudio: {fileID: 11400000, guid: 5332c3844e647d14f96abf9c092b62fa, type: 2}
+  _jumpAudio: {fileID: 11400000, guid: 54c2b1a04d0da8f4ba93d1b4adea0b6b, type: 2}
 --- !u!1 &4974764658226680422
 GameObject:
   m_ObjectHideFlags: 0
