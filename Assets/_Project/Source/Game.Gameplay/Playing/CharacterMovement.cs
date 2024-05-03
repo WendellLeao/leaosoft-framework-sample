@@ -6,7 +6,8 @@ namespace Game.Gameplay.Playing
 {
     public sealed class CharacterMovement : EntityComponent
     {
-        [SerializeField] private float _moveSpeed;
+        [SerializeField]
+        private float _moveSpeed;
         
         private IInputService _inputService;
         private Rigidbody2D _rigidBody;

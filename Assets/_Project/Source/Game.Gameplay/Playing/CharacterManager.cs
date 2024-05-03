@@ -1,4 +1,3 @@
-using Leaosoft.Events;
 using Leaosoft.Input;
 using UnityEngine;
 using Leaosoft;
@@ -7,15 +6,14 @@ namespace Game.Gameplay.Playing
 {
     public sealed class CharacterManager : Manager
     {
-        [SerializeField] private Character _character;
+        [SerializeField]
+        private Character _character;
         
         private IInputService _inputService;
-        private IEventService _eventService;
 
-        public void Initialize(IInputService inputService, IEventService eventService)
+        public void Initialize(IInputService inputService)
         {
             _inputService = inputService;
-            _eventService = eventService;
             
             base.Initialize();
         }

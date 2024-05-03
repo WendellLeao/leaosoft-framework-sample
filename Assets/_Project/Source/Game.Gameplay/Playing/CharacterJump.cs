@@ -8,12 +8,16 @@ namespace Game.Gameplay.Playing
 {
     public sealed class CharacterJump : EntityComponent
     {
-        [SerializeField] private float _jumpForce;
-        [SerializeField] private float _minimumDistance = 0.06f;
-        [SerializeField] private LayerMask _groundLayers;
+        [SerializeField]
+        private float _jumpForce;
+        [SerializeField]
+        private float _minimumDistance = 0.06f;
+        [SerializeField]
+        private LayerMask _groundLayers;
 
         [Header("Audio")] 
-        [SerializeField] private AudioData _jumpAudio;
+        [SerializeField]
+        private AudioData _jumpAudio;
         
         private IInputService _inputService;
         private IAudioService _audioService;

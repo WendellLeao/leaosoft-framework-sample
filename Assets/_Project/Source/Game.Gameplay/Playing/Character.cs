@@ -7,15 +7,20 @@ namespace Game.Gameplay.Playing
     public sealed class Character : Entity
     {
         [Header("Physics")]
-        [SerializeField] private Rigidbody2D _rigidBody;
-        [SerializeField] private BoxCollider2D _boxCollider;
+        [SerializeField]
+        private Rigidbody2D _rigidBody;
+        [SerializeField]
+        private BoxCollider2D _boxCollider;
         
         [Header("Components")]
-        [SerializeField] private CharacterMovement _characterMovement;
-        [SerializeField] private CharacterJump _characterJump;
+        [SerializeField]
+        private CharacterMovement _characterMovement;
+        [SerializeField]
+        private CharacterJump _characterJump;
 
         [Header("View")] 
-        [SerializeField] private CharacterView _characterView;
+        [SerializeField]
+        private CharacterView _characterView;
 
         private IInputService _inputService;
 
