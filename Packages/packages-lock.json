@@ -8,14 +8,14 @@
       "url": "https://package.openupm.com"
     },
     "com.leaosoft.core": {
-      "version": "1.4.12",
+      "version": "https://github.com/WendellLeao/leaosoft-framework-archive.git",
       "depth": 0,
-      "source": "registry",
+      "source": "git",
       "dependencies": {
         "com.unity.inputsystem": "1.4.1",
         "com.cysharp.unitask": "2.3.1"
       },
-      "url": "https://package.openupm.com"
+      "hash": "012a4adc299eff7c6325aca653c5fdcb532263fb"
     },
     "com.unity.2d.animation": {
       "version": "7.0.6",

@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.leaosoft.core": "1.4.12",
+    "com.leaosoft.core": "https://github.com/WendellLeao/leaosoft-framework-archive.git",
     "com.unity.collab-proxy": "1.17.2",
     "com.unity.feature.2d": "1.0.0",
     "com.unity.ide.rider": "3.0.16",
